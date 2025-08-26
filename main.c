@@ -1,29 +1,22 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "student_functions.h"
 #include <stdbool.h>
-
-typedef struct {
-    char name[20];
-    int age;
-    float gpa;
-    int id;
-}Student;
 
 int main(void) {
     while (true) {
         int userMenuChoice = getUserMenuChoice();
 
         switch (userMenuChoice) {
-            case 1:
+            case 1: // add student to the struct array
                 addStudent();
                 break;
-            case 2:
+            case 2: // display all the students from the struct array
+                displayStudents();
                 break;
-            case 3:
+            case 3: // update a students gpa
+                updateStudentGPA();
                 break;
-            case 4:
+            case 4: // remove a student from the struct array
                 break;
             case 5:
                 printf("\nThank you for using the program!");
@@ -33,5 +26,4 @@ int main(void) {
                 break;
         }
     }
-    return 0;
 }
