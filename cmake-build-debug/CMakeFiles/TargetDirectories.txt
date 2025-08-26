@@ -1,0 +1,3 @@
+/home/spaceboy/CLionProjects/StudentManagementSystem/cmake-build-debug/CMakeFiles/StudentManagementSystem.dir
+/home/spaceboy/CLionProjects/StudentManagementSystem/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/spaceboy/CLionProjects/StudentManagementSystem/cmake-build-debug/CMakeFiles/rebuild_cache.dir
