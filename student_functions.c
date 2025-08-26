@@ -48,26 +48,35 @@ void displayStudents() {
     }
 }
 
-int selectStudentNumber() { // gets the student number for updateStudentGPA() to use
-    int userChoice;
+int selectStudentFromID() { // gets the student number for updateStudentGPA() to use
+    int studentID;
+    int selectedStudent;
+
     printf("Select a student:\n");
     for (int i = 0; i < studentCount; i++) {
         printf("Student %d: %s | Age: %d | GPA: %.2f | ID: %d\n", i + 1, students[i].name, students[i].age, students[i].gpa, students[i].id);
     }
-    printf("Enter student number: ");
-    scanf("%d", &userChoice);
+    printf("Enter student ID: ");
+    scanf("%d", &studentID);
 
-    return userChoice;
+    for (int i = 0; i < studentCount; i++) {
+        if (studentID == students[i].id) {
+            selectedStudent = i;
+            return selectedStudent;
+        }
+    }
+
+    printf("Student not found!\n");
 }
 
 void updateStudentGPA() {
-    int userChoice = selectStudentNumber();
+    int selectedStudent = selectStudentFromID();
     float newGPA;
 
     printf("Enter a new GPA: ");
     scanf("%f", &newGPA);
-    students[userChoice - 1].gpa = newGPA;
+    students[selectedStudent].gpa = newGPA;
 
-    printf("Student %s GPA has been changed to %.2f!\n", students[userChoice - 1].name, newGPA);
+    printf("Student %s with the ID %d GPA has been changed to %.2f!\n", students[selectedStudent].name, students[selectedStudent].id, students[selectedStudent].gpa);
 }
 
