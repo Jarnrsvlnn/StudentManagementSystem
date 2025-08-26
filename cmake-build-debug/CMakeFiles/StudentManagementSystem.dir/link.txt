@@ -1,0 +1,1 @@
+/usr/bin/cc -g -Wl,--dependency-file=CMakeFiles/StudentManagementSystem.dir/link.d CMakeFiles/StudentManagementSystem.dir/main.c.o CMakeFiles/StudentManagementSystem.dir/student_functions.c.o -o StudentManagementSystem

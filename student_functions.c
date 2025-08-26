@@ -6,6 +6,7 @@ typedef struct {
     char name[20];
     int age;
     float gpa;
+    int id;
 }Student;
 
 // declared globally so that all functions has access
@@ -20,9 +21,16 @@ int getUserMenuChoice() {
     return menuChoice;
 }
 
+void generateStudentID(Student * students) {
+    static int studentID = 202400000;
+    students->id = studentID;
+    ++studentID;
+}
+
 void addStudent() {
     studentCount++;
     students = realloc(students, studentCount * sizeof(Student)); //
+    generateStudentID(&students[studentCount - 1]);
 
     printf("Enter student name: ");
     scanf("%s", students[studentCount - 1].name);
@@ -36,7 +44,7 @@ void addStudent() {
 void displayStudents() {
     printf("\nList of all students:\n");
     for (int i = 0; i < studentCount; i++) {
-        printf("Student %d: %s | Age: %d | GPA: %.2f\n", i + 1, students[i].name, students[i].age, students[i].gpa);
+        printf("Student %d: %s | Age: %d | GPA: %.2f | ID: %d\n", i + 1, students[i].name, students[i].age, students[i].gpa, students[i].id);
     }
 }
 
@@ -44,7 +52,7 @@ int selectStudentNumber() { // gets the student number for updateStudentGPA() to
     int userChoice;
     printf("Select a student:\n");
     for (int i = 0; i < studentCount; i++) {
-        printf("Student %d: %s | Age: %d | GPA: %.2f\n", i + 1, students[i].name, students[i].age, students[i].gpa);
+        printf("Student %d: %s | Age: %d | GPA: %.2f | ID: %d\n", i + 1, students[i].name, students[i].age, students[i].gpa, students[i].id);
     }
     printf("Enter student number: ");
     scanf("%d", &userChoice);
