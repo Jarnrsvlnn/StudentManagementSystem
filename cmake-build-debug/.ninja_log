@@ -1,0 +1,13 @@
+# ninja log v6
+0	54	1756176318064234725	CMakeFiles/StudentManagementSystem.dir/main.c.o	435554ba018ea2ec
+1	54	1756176318065234727	CMakeFiles/StudentManagementSystem.dir/student_functions.c.o	995b279f0ed25285
+54	83	1756176318119378266	StudentManagementSystem	aec8b7e777ae7d0f
+1	19	1756176342094267759	CMakeFiles/StudentManagementSystem.dir/student_functions.c.o	995b279f0ed25285
+0	21	1756176342093267758	CMakeFiles/StudentManagementSystem.dir/main.c.o	435554ba018ea2ec
+21	38	1756176342114267787	StudentManagementSystem	aec8b7e777ae7d0f
+0	20	1756176356307287299	CMakeFiles/StudentManagementSystem.dir/main.c.o	435554ba018ea2ec
+20	35	1756176356327287326	StudentManagementSystem	aec8b7e777ae7d0f
+0	21	1756176394854792298	CMakeFiles/StudentManagementSystem.dir/main.c.o	435554ba018ea2ec
+22	35	1756176394875340324	StudentManagementSystem	aec8b7e777ae7d0f
+1	20	1756176408253358716	CMakeFiles/StudentManagementSystem.dir/main.c.o	435554ba018ea2ec
+20	36	1756176408272358742	StudentManagementSystem	aec8b7e777ae7d0f
