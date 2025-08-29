@@ -5,8 +5,10 @@
 #ifndef STUDENT_FUNCTIONS_H
 void addStudent();
 int getUserMenuChoice();
+int menuInterface();
 void displayStudents();
 void updateStudentGPA();
+void deleteStudent();
 #define STUDENT_FUNCTIONS_H
 
 

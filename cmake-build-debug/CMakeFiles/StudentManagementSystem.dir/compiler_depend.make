@@ -86,6 +86,7 @@ CMakeFiles/StudentManagementSystem.dir/student_functions.c.o: /home/spaceboy/CLi
   /usr/include/sys/select.h \
   /usr/include/sys/types.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h
 
 StudentManagementSystem: /lib64/ld-linux-x86-64.so.2 \

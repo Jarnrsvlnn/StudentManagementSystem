@@ -32,4 +32,5 @@ CMakeFiles/StudentManagementSystem.dir/student_functions.c.o: \
  /usr/include/bits/pthreadtypes-arch.h \
  /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
  /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-float.h
+ /usr/include/bits/stdlib-float.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h
