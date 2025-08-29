@@ -1,11 +1,7 @@
-//
-// Created by spaceboy on 8/26/25.
-//
-
 #ifndef STUDENT_FUNCTIONS_H
 void addStudent();
 int getUserMenuChoice();
-int menuInterface();
+int menuInterface(int menuChoice);
 void displayStudents();
 void updateStudentGPA();
 void deleteStudent();

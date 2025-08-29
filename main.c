@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "student_functions.h"
 #include <stdbool.h>
 
