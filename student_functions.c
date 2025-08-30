@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 typedef struct {
-    char name[20];
+    char name[50];
     int age;
     float gpa;
     int id;
@@ -24,11 +24,12 @@ int getUserMenuChoice() {
         printf("\n<==== Student Management System ====>\n1. Add Student\n2. View All Students\n3. Update Student GPA\n4. Delete Student\n5. Exit\nEnter your choice: ");
 
         if (scanf("%d", &menuChoice) == 1) { // if the user inputs a valid data type then scanf returns 1
+            while (getchar() != '\n'); // flush newline
             if (menuChoice >= 1 && menuChoice <= 5) {
                 isValid = true;
             }
             else {
-                printf("Invalid Input! Please enter a number between 1 and 5.");
+                printf("\nInvalid Input! Please enter a number between 1 and 5.\n");
             }
         }
         else {
@@ -52,7 +53,7 @@ int menuInterface(int menuChoice) {
             updateStudentGPA();
             break;
         case 4: // remove a student from the struct array
-            deleteStudent();
+            (studentCount <= 0) ? printf("\nThere are no current students.\n") : deleteStudent();
             break;
         case 5:
             printf("\nThank you for using the program!");
@@ -71,53 +72,66 @@ void generateStudentID(Student * students) {
 
 void addStudent() {
     bool isValid = false;
+    char validChars[52] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+    char buffer[100];
+    char *endPtr;
+
     studentCount++;
-    students = realloc(students, studentCount * sizeof(Student)); //
+    students = realloc(students, studentCount * sizeof(Student));
     generateStudentID(&students[studentCount - 1]);
 
-    while (!isValid) {
-        printf("Enter student name: ");
-        scanf("%s", students[studentCount - 1].name);
+    // NAME
+    while (true) {
+        printf("\nEnter student name: ");
+        fgets(students[studentCount - 1].name, sizeof(students[studentCount - 1].name), stdin);
+        students[studentCount - 1].name[strcspn(students[studentCount - 1].name, "\n")] = '\0';
 
-        isValid = true;
-        // checks if the entered name is all leters
-        for (int i = 0; i < strlen(students[studentCount - 1].name); ++i) {
-            if (!isalpha(students[studentCount - 1].name[i])) {
-                printf("Invalid Name! Enter letters only.\n");
-                isValid = false;
-                break;
+        if (strspn(students[studentCount - 1].name, validChars) == strlen(students[studentCount - 1].name) &&
+            strlen(students[studentCount - 1].name) > 0) {
+            break; // valid
             }
-        }
-
-        if (!isValid) {
-            continue;
-        }
-
-        printf("Enter student age: ");
-        if (scanf("%d", &students[studentCount - 1].age) == 0 || students[studentCount - 1].age <= 0) {
-            printf("\nInvalid Input! Please enter a number.\n");
-            while (getchar() != '\n');
-            continue;
-        }
-
-        printf("Enter student gpa: ");
-        if (scanf("%f", &students[studentCount - 1].gpa) == 0 || students[studentCount - 1].gpa < 1.00 || students[studentCount - 1].gpa > 5.00) {
-            printf("\nInvalid Input! Please enter a valid GPA.\n");
-            while (getchar() != '\n');
-            continue;
-        }
-        break;
+        printf("\nInvalid Name! Try again.\n");
     }
+
+    // AGE
+    while (true) {
+        printf("Enter student age: ");
+        fgets(buffer, sizeof(buffer), stdin);
+        buffer[strcspn(buffer, "\n")] = '\0';
+        int tempAge = strtol(buffer, &endPtr, 10);
+
+        if (*endPtr == '\0' && tempAge > 0 && tempAge <= 100) {
+            students[studentCount - 1].age = tempAge;
+            break;
+        }
+        printf("\nInvalid Age! Try again.\n");
+    }
+
+    // GPA
+    while (true) {
+        printf("Enter student gpa: ");
+        fgets(buffer, sizeof(buffer), stdin);
+        buffer[strcspn(buffer, "\n")] = '\0';
+        float tempGPA = strtof(buffer, &endPtr);
+
+        if (*endPtr == '\0' && tempGPA >= 1.00 && tempGPA <= 5.00) {
+            students[studentCount - 1].gpa = tempGPA;
+            break;
+        }
+        printf("\nInvalid GPA! Try again.\n");
+    }
+
     printf("\n");
 }
 
 void displayStudents() {
-    printf("\nList of all students:\n");
 
     if (studentCount == 0) {
-        printf("There are no current student.\n");
+        printf("\nThere are no current student.\n");
     }
     else {
+        printf("\nList of all students:\n");
+
         for (int i = 0; i < studentCount; i++) {
             printf("Student %d: %s | Age: %d | GPA: %.2f | ID: %d\n", i + 1, students[i].name, students[i].age, students[i].gpa, students[i].id);
         }
@@ -163,7 +177,7 @@ void updateStudentGPA() {
 
 }
 
-void deleteStudent() {
+int deleteStudent() {
     int studentToDelete;
     int studentIndex = -1;
 
@@ -182,6 +196,7 @@ void deleteStudent() {
 
         if (studentIndex == -1) {
             printf("Student not found!\n");
+            return 1;
         }
 
         for (int i = studentIndex; i < studentCount - 1; i++) { // this will shift the student at index student[i] which starts at selected studentIndex to the left
@@ -191,6 +206,8 @@ void deleteStudent() {
         studentCount--; // this reduces the size of the student struct array, and works because of the code in line 126
         students = realloc(students, studentCount * sizeof(Student));
         printf("\nStudent with the ID %d has been deleted!\n", studentToDelete);
+
     }
+    return 1;
 }
 
