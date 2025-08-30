@@ -5,6 +5,8 @@ int menuInterface(int menuChoice);
 void displayStudents();
 void updateStudentGPA();
 int deleteStudent();
+void saveToFile();
+void loadFromFile();
 #define STUDENT_FUNCTIONS_H
 
 

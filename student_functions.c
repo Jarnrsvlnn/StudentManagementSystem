@@ -15,17 +15,19 @@ typedef struct {
 // declared globally so that all functions has access
 Student * students = NULL;
 int studentCount = 0;
+FILE * filePointer;
+int nextStudentID = 202400000;
 
 int getUserMenuChoice() {
     int menuChoice;
     bool isValid = false;
 
     while (!isValid) {
-        printf("\n<==== Student Management System ====>\n1. Add Student\n2. View All Students\n3. Update Student GPA\n4. Delete Student\n5. Exit\nEnter your choice: ");
+        printf("\n<==== Student Management System ====>\n1. Add Student\n2. View All Students\n3. Update Student GPA\n4. Delete Student\n5. Save Changes\n6. Exit\nEnter your choice: ");
 
         if (scanf("%d", &menuChoice) == 1) { // if the user inputs a valid data type then scanf returns 1
             while (getchar() != '\n'); // flush newline
-            if (menuChoice >= 1 && menuChoice <= 5) {
+            if (menuChoice >= 1 && menuChoice <= 6) {
                 isValid = true;
             }
             else {
@@ -55,19 +57,22 @@ int menuInterface(int menuChoice) {
         case 4: // remove a student from the struct array
             (studentCount <= 0) ? printf("\nThere are no current students.\n") : deleteStudent();
             break;
-        case 5:
+        case 5: // save changes
+            saveToFile();
+            break;
+        case 6:
             printf("\nThank you for using the program!");
             return 0;
         default:
             printf("Invalid Choice! Please try again.\n\n");
             break;
     }
+    return 1;
 }
 
 void generateStudentID(Student * students) {
-    static int studentID = 202400000;
-    students->id = studentID;
-    ++studentID;
+    students->id = nextStudentID++;
+    nextStudentID++;
 }
 
 void addStudent() {
@@ -125,7 +130,6 @@ void addStudent() {
 }
 
 void displayStudents() {
-
     if (studentCount == 0) {
         printf("\nThere are no current student.\n");
     }
@@ -211,3 +215,58 @@ int deleteStudent() {
     return 1;
 }
 
+void saveToFile() {
+    filePointer = fopen("student_records.txt", "w");
+
+    if (filePointer == NULL) {
+        printf("\nError saving file!\n");
+        return;
+    }
+
+    for (int i = 0; i < studentCount; i++) {
+        fprintf(filePointer, "%s,%d,%d,%.2f\n", students[i].name, students[i].id, students[i].age, students[i].gpa);
+    }
+
+    fclose(filePointer);
+    printf("\nFile saved successfully!\n");
+}
+
+void loadFromFile() {
+    char studentLine[100];
+    filePointer = fopen("student_records.txt", "r");
+
+    if (filePointer == NULL) {
+        printf("\nNo existing records found. Starting fresh.\n");
+        return;
+    }
+
+    while (fgets(studentLine, sizeof(studentLine), filePointer) != NULL) {
+        students = realloc(students, (studentCount + 1) * sizeof(Student));
+        studentLine[strcspn(studentLine, "\n")] = '\0';
+
+        char *token = strtok(studentLine, ",");
+        if (!token) continue;  // skip malformed line
+        strcpy(students[studentCount].name, token);
+
+        token = strtok(NULL, ",");
+        if (!token) continue;
+        students[studentCount].id = atoi(token);
+
+        token = strtok(NULL, ",");
+        if (!token) continue;
+        students[studentCount].age = atoi(token);
+
+        token = strtok(NULL, ",");
+        if (!token) continue;
+        students[studentCount].gpa = atof(token);
+
+        if (students[studentCount].id >= nextStudentID) {
+            nextStudentID = students[studentCount].id + 1;
+        }
+
+        studentCount++;
+    }
+
+    fclose(filePointer);
+    printf("\nRecords loaded successfully!\n");
+}
